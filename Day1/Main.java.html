@@ -1,0 +1,553 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">lang</span><span class="s2">.</span><span class="s1">reflect</span><span class="s2">.</span><span class="s1">Array</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.</span><span class="s1">SQLSyntaxErrorException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Optional</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+
+<span class="s0">class </span><span class="s1">Product </span><span class="s2">{</span>
+    <span class="s0">private int </span><span class="s1">id</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String productName</span><span class="s2">;</span>
+    <span class="s0">private double </span><span class="s1">productPrice</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">stock</span><span class="s2">;</span>
+    <span class="s0">private boolean </span><span class="s1">delete</span><span class="s2">;</span>
+    <span class="s0">private static int </span><span class="s1">count </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+    <span class="s1">Product</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">, </span><span class="s1">String productName</span><span class="s2">, </span><span class="s0">double </span><span class="s1">productPrice</span><span class="s2">, </span><span class="s0">int </span><span class="s1">stock</span><span class="s2">, </span><span class="s0">boolean </span><span class="s1">delete</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">id </span><span class="s2">= </span><span class="s1">id</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">productName </span><span class="s2">= </span><span class="s1">productName</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">productPrice </span><span class="s2">= </span><span class="s1">productPrice</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">stock </span><span class="s2">= </span><span class="s1">stock</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">delete </span><span class="s2">= </span><span class="s1">delete</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public int </span><span class="s1">getId</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getProductName</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">productName</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setProductName</span><span class="s2">(</span><span class="s1">String productName</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">productName </span><span class="s2">= </span><span class="s1">productName</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public double </span><span class="s1">getProductPrice</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">productPrice</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setProductPrice</span><span class="s2">(</span><span class="s0">double </span><span class="s1">productPrice</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">productPrice </span><span class="s2">= </span><span class="s1">productPrice</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public int </span><span class="s1">getStock</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">stock</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setStock</span><span class="s2">(</span><span class="s0">int </span><span class="s1">stock</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">stock </span><span class="s2">= </span><span class="s1">stock</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">isDelete</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">delete</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDelete</span><span class="s2">(</span><span class="s0">boolean </span><span class="s1">delete</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">delete </span><span class="s2">= </span><span class="s1">delete</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">id </span><span class="s2">+ </span><span class="s4">&quot;,&quot; </span><span class="s2">+ </span><span class="s1">productName </span><span class="s2">+ </span><span class="s4">&quot;,&quot; </span><span class="s2">+ </span><span class="s1">productPrice </span><span class="s2">+ </span><span class="s4">&quot;,&quot; </span><span class="s2">+ </span><span class="s1">stock </span><span class="s2">+ </span><span class="s4">&quot;,&quot; </span><span class="s2">+ </span><span class="s1">delete</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// Method to convert a line from file back into a Product object</span>
+    <span class="s0">public static </span><span class="s1">Product fromString</span><span class="s2">(</span><span class="s1">String line</span><span class="s2">) {</span>
+        <span class="s1">String</span><span class="s2">[] </span><span class="s1">parts </span><span class="s2">= </span><span class="s1">line</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]);</span>
+        <span class="s1">String productName </span><span class="s2">= </span><span class="s1">parts</span><span class="s2">[</span><span class="s3">1</span><span class="s2">];</span>
+        <span class="s0">double </span><span class="s1">productPrice </span><span class="s2">= </span><span class="s1">Double</span><span class="s2">.</span><span class="s1">parseDouble</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">2</span><span class="s2">]);</span>
+        <span class="s0">int </span><span class="s1">stock </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">3</span><span class="s2">]);</span>
+        <span class="s0">boolean </span><span class="s1">delete </span><span class="s2">= </span><span class="s1">Boolean</span><span class="s2">.</span><span class="s1">parseBoolean</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">4</span><span class="s2">]);</span>
+        <span class="s0">return new </span><span class="s1">Product</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">productName</span><span class="s2">, </span><span class="s1">productPrice</span><span class="s2">, </span><span class="s1">stock</span><span class="s2">, </span><span class="s1">delete</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+
+<span class="s0">class </span><span class="s1">Purchase </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">Product product</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">quantity</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Purchase</span><span class="s2">(</span><span class="s1">Product product</span><span class="s2">, </span><span class="s0">int </span><span class="s1">quantity</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">product </span><span class="s2">= </span><span class="s1">product</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">quantity </span><span class="s2">= </span><span class="s1">quantity</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">Product getProduct</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">product</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public int </span><span class="s1">getQuantity</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">quantity</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() + </span><span class="s4">&quot;,&quot; </span><span class="s2">+ </span><span class="s1">quantity</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// Method to convert a line from file back into a Purchase object</span>
+    <span class="s0">public static </span><span class="s1">Purchase fromString</span><span class="s2">(</span><span class="s1">String line</span><span class="s2">, </span><span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">products</span><span class="s2">) {</span>
+        <span class="s1">String</span><span class="s2">[] </span><span class="s1">parts </span><span class="s2">= </span><span class="s1">line</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">productId </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]);</span>
+        <span class="s0">int </span><span class="s1">quantity </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">parts</span><span class="s2">[</span><span class="s3">1</span><span class="s2">]);</span>
+
+        <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">productId</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+            <span class="s1">Product product </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+            <span class="s0">return new </span><span class="s1">Purchase</span><span class="s2">(</span><span class="s1">product</span><span class="s2">, </span><span class="s1">quantity</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s0">return null</span><span class="s2">; </span><span class="s5">// Handle error or return null as needed</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+
+
+<span class="s0">class </span><span class="s1">Store </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">products </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private </span><span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Purchase</span><span class="s2">&gt; </span><span class="s1">cart </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+
+    <span class="s0">private static final </span><span class="s1">String PRODUCT_FILE </span><span class="s2">= </span><span class="s4">&quot;/Users/priyadharshini/Desktop/ProductManagement/product.txt&quot;</span><span class="s2">;</span>
+    <span class="s0">private static final </span><span class="s1">String PURCHASE_FILE </span><span class="s2">= </span><span class="s4">&quot;/Users/priyadharshini/Desktop/ProductManagement/purchase.txt&quot;</span><span class="s2">;</span>
+
+    <span class="s0">private static int </span><span class="s1">productIdCounter </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Store</span><span class="s2">() {</span>
+        <span class="s5">// Initialize products and cart from files at program start</span>
+        <span class="s1">loadProducts</span><span class="s2">();</span>
+        <span class="s1">loadCart</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+
+    <span class="s5">// Method to load products from file</span>
+    <span class="s0">private void </span><span class="s1">loadProducts</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedReader reader </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedReader</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileReader</span><span class="s2">(</span><span class="s1">PRODUCT_FILE</span><span class="s2">))) {</span>
+            <span class="s1">String line</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">((</span><span class="s1">line </span><span class="s2">= </span><span class="s1">reader</span><span class="s2">.</span><span class="s1">readLine</span><span class="s2">()) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">Product product </span><span class="s2">= </span><span class="s1">Product</span><span class="s2">.</span><span class="s1">fromString</span><span class="s2">(</span><span class="s1">line</span><span class="s2">);</span>
+                <span class="s1">products</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">product</span><span class="s2">);</span>
+                <span class="s5">// Update productIdCounter if necessary</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() &gt; </span><span class="s1">productIdCounter</span><span class="s2">) {</span>
+                    <span class="s1">productIdCounter </span><span class="s2">= </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">();</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error reading product file: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// Method to load cart from file</span>
+    <span class="s0">private void </span><span class="s1">loadCart</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedReader reader </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedReader</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileReader</span><span class="s2">(</span><span class="s1">PURCHASE_FILE</span><span class="s2">))) {</span>
+            <span class="s1">String line</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">((</span><span class="s1">line </span><span class="s2">= </span><span class="s1">reader</span><span class="s2">.</span><span class="s1">readLine</span><span class="s2">()) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">Purchase purchase </span><span class="s2">= </span><span class="s1">Purchase</span><span class="s2">.</span><span class="s1">fromString</span><span class="s2">(</span><span class="s1">line</span><span class="s2">, </span><span class="s1">products</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">purchase </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                    <span class="s1">cart</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">purchase</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error loading cart item: &quot; </span><span class="s2">+ </span><span class="s1">line</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error reading purchase file: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// Method to save products to file</span>
+    <span class="s0">private void </span><span class="s1">saveProducts</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedWriter writer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedWriter</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileWriter</span><span class="s2">(</span><span class="s1">PRODUCT_FILE</span><span class="s2">))) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s1">Product product </span><span class="s2">: </span><span class="s1">products</span><span class="s2">) {</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">write</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">());</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">newLine</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s1">writer</span><span class="s2">.</span><span class="s1">flush</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error writing to product file: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// Method to save cart to file</span>
+    <span class="s0">private void </span><span class="s1">saveCart</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedWriter writer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedWriter</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileWriter</span><span class="s2">(</span><span class="s1">PURCHASE_FILE</span><span class="s2">))) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s1">Purchase purchase </span><span class="s2">: </span><span class="s1">cart</span><span class="s2">) {</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">write</span><span class="s2">(</span><span class="s1">purchase</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">());</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">newLine</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s1">writer</span><span class="s2">.</span><span class="s1">flush</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error writing to purchase file: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">addProduct</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product name: &quot;</span><span class="s2">);</span>
+        <span class="s1">String productName </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product price: &quot;</span><span class="s2">);</span>
+        <span class="s0">double </span><span class="s1">productPrice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextDouble</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter initial stock: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">stock </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">stock </span><span class="s2">&lt; </span><span class="s3">0 </span><span class="s2">|| </span><span class="s1">productPrice </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid stock or price value.&quot;</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">productIdCounter</span><span class="s2">++;</span>
+        <span class="s1">Product newProduct </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Product</span><span class="s2">(</span><span class="s1">productIdCounter</span><span class="s2">, </span><span class="s1">productName</span><span class="s2">, </span><span class="s1">productPrice</span><span class="s2">, </span><span class="s1">stock</span><span class="s2">, </span><span class="s0">false</span><span class="s2">);</span>
+        <span class="s1">products</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">newProduct</span><span class="s2">);</span>
+        <span class="s1">saveProducts</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product added successfully.&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">viewProductById</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product ID to view details: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">idToView </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToView </span><span class="s2">&amp;&amp; !</span><span class="s1">product</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">())</span>
+                <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+            <span class="s1">Product product </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product ID: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Name: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductName</span><span class="s2">());</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Price: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductPrice</span><span class="s2">());</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Stock: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">());</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Delete: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">());</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToView</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+
+
+    <span class="s0">public void </span><span class="s1">viewAllProducts</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;All products:&quot;</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Product product </span><span class="s2">: </span><span class="s1">products</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;ID: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() + </span><span class="s4">&quot;, Name: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductName</span><span class="s2">() +</span>
+                    <span class="s4">&quot;, Price: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductPrice</span><span class="s2">() + </span><span class="s4">&quot;, Stock: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">() + </span><span class="s4">&quot;, Delete: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">updateStockById</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product ID to update stock: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">idToUpdateStock </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToUpdateStock </span><span class="s2">&amp;&amp; !</span><span class="s1">product</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">())</span>
+                <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+            <span class="s1">Product productToUpdate </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Do you want to replace or override the stock? [0] Replace | [1] Override&quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">stockChoice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">stockChoice </span><span class="s2">== </span><span class="s3">1</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter the additional stock quantity: &quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">additionalStock </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">additionalStock </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid stock quantity entered.&quot;</span><span class="s2">);</span>
+                    <span class="s0">return</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">setStock</span><span class="s2">(</span><span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">() + </span><span class="s1">additionalStock</span><span class="s2">);</span>
+                <span class="s1">saveProducts</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Stock overridden successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">stockChoice </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter new stock quantity: &quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">newStock </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">newStock </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid stock quantity entered.&quot;</span><span class="s2">);</span>
+                    <span class="s0">return</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">setStock</span><span class="s2">(</span><span class="s1">newStock</span><span class="s2">);</span>
+                <span class="s1">saveProducts</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Stock replaced successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid choice. Please choose 0 or 1.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToUpdateStock</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">updatePriceById</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product ID to update price: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">idToUpdatePrice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToUpdatePrice</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+            <span class="s1">Product productToUpdate </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">()) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product cannot be updated as it is marked as deleted.&quot;</span><span class="s2">);</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Do you want to replace or override the price? [0] Replace | [1] Override&quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s3">0</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter new price: &quot;</span><span class="s2">);</span>
+                <span class="s0">double </span><span class="s1">newPrice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextDouble</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">newPrice </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid price entered.&quot;</span><span class="s2">);</span>
+                    <span class="s0">return</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">setProductPrice</span><span class="s2">(</span><span class="s1">newPrice</span><span class="s2">);</span>
+                <span class="s1">saveProducts</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Price replaced successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s3">1</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter the additional price: &quot;</span><span class="s2">);</span>
+                <span class="s0">double </span><span class="s1">additionalPrice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextDouble</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">additionalPrice </span><span class="s2">&lt; </span><span class="s3">0</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid price entered.&quot;</span><span class="s2">);</span>
+                    <span class="s0">return</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">setProductPrice</span><span class="s2">(</span><span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">getProductPrice</span><span class="s2">() + </span><span class="s1">additionalPrice</span><span class="s2">);</span>
+                <span class="s1">saveProducts</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Price overridden successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid choice. Please choose 0 or 1.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToUpdatePrice</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">updateProductName</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter the product id to be updated: &quot;</span><span class="s2">);</span>
+    <span class="s0">int </span><span class="s1">idToBeUpdatedForName </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+
+
+    <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+            <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToBeUpdatedForName</span><span class="s2">)</span>
+            <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToBeUpdatedForName</span><span class="s2">);</span>
+        <span class="s0">return</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">Product productToUpdate </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+
+
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">()) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product cannot be updated as it is marked as deleted.&quot;</span><span class="s2">);</span>
+        <span class="s0">return</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter the new product name: &quot;</span><span class="s2">);</span>
+    <span class="s1">String newName </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">next</span><span class="s2">();</span>
+    <span class="s1">productToUpdate</span><span class="s2">.</span><span class="s1">setProductName</span><span class="s2">(</span><span class="s1">newName</span><span class="s2">);</span>
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product name updated successfully.&quot;</span><span class="s2">);</span>
+<span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">addToCart</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product ID to be added to cart: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">cartId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">cartId </span><span class="s2">&amp;&amp; !</span><span class="s1">product</span><span class="s2">.</span><span class="s1">isDelete</span><span class="s2">())</span>
+                <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+            <span class="s1">Product selectedProduct </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter valid quantity within stock &quot; </span><span class="s2">+ </span><span class="s1">selectedProduct</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">() + </span><span class="s4">&quot;: &quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">quantity </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">quantity </span><span class="s2">&lt;= </span><span class="s3">0</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Please enter a valid quantity greater than zero.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">quantity </span><span class="s2">&gt; </span><span class="s1">selectedProduct</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">()) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Quantity exceeds available stock.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">cart</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Purchase</span><span class="s2">(</span><span class="s1">selectedProduct</span><span class="s2">, </span><span class="s1">quantity</span><span class="s2">));</span>
+                <span class="s1">selectedProduct</span><span class="s2">.</span><span class="s1">setStock</span><span class="s2">(</span><span class="s1">selectedProduct</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">() - </span><span class="s1">quantity</span><span class="s2">);</span>
+                <span class="s1">saveCart</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product added to cart successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found with ID &quot; </span><span class="s2">+ </span><span class="s1">cartId</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+
+    <span class="s0">public void </span><span class="s1">removeFromCart</span><span class="s2">(</span><span class="s1">Scanner sc</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Enter product ID to remove from cart: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">idToRemove </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s5">// Consume newline left-over</span>
+
+        <span class="s0">boolean </span><span class="s1">removed </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">cart</span><span class="s2">.</span><span class="s1">size</span><span class="s2">(); </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">Purchase purchase </span><span class="s2">= </span><span class="s1">cart</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">purchase</span><span class="s2">.</span><span class="s1">getProduct</span><span class="s2">().</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToRemove</span><span class="s2">) {</span>
+                <span class="s1">cart</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">i</span><span class="s2">);</span>
+                <span class="s1">removed </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">removed</span><span class="s2">) {</span>
+            <span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">optionalProduct </span><span class="s2">= </span><span class="s1">products</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                    <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">product -&gt; product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() == </span><span class="s1">idToRemove</span><span class="s2">)</span>
+                    <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">isPresent</span><span class="s2">()) {</span>
+                <span class="s1">Product product </span><span class="s2">= </span><span class="s1">optionalProduct</span><span class="s2">.</span><span class="s1">get</span><span class="s2">();</span>
+                <span class="s1">product</span><span class="s2">.</span><span class="s1">setStock</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getStock</span><span class="s2">() + </span><span class="s3">1</span><span class="s2">); </span><span class="s5">// Assuming to increase stock by 1</span>
+                <span class="s1">saveProducts</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product removed from cart successfully.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found in products list with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToRemove</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Product not found in cart with ID: &quot; </span><span class="s2">+ </span><span class="s1">idToRemove</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+
+
+    <span class="s0">public void </span><span class="s1">displayCart</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Your cart items are:&quot;</span><span class="s2">);</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Purchase purchase </span><span class="s2">: </span><span class="s1">cart</span><span class="s2">) {</span>
+            <span class="s1">Product product </span><span class="s2">= </span><span class="s1">purchase</span><span class="s2">.</span><span class="s1">getProduct</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;ID: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() + </span><span class="s4">&quot;, Name: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductName</span><span class="s2">() +</span>
+                    <span class="s4">&quot;, Price: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getProductPrice</span><span class="s2">() + </span><span class="s4">&quot;, Quantity: &quot; </span><span class="s2">+ </span><span class="s1">purchase</span><span class="s2">.</span><span class="s1">getQuantity</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">saveAllData</span><span class="s2">() {</span>
+        <span class="s1">saveProducts</span><span class="s2">();</span>
+        <span class="s1">saveCart</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">exit</span><span class="s2">() {</span>
+        <span class="s1">saveAllData</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Exiting...&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">exit</span><span class="s2">(</span><span class="s3">0</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+
+<span class="s0">public class </span><span class="s1">Main </span><span class="s2">{</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">Main</span><span class="s2">. </span><span class="s1">whileLoop</span><span class="s2">() ;</span>
+    <span class="s2">}</span>
+    <span class="s0">public static void </span><span class="s1">whileLoop</span><span class="s2">() {</span>
+        <span class="s1">Scanner scanner </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">Store store </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Store</span><span class="s2">();</span>
+        <span class="s0">while </span><span class="s2">(</span><span class="s0">true</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Choose an option:&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1. Add a product&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2. View product by ID&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;3. View all products&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;4. Update stock by ID&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;5. Update price by ID&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;6. Update product name by ID&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;7. Purchase from cart&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;8. Remove product from cart&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;9. View cart&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;10. Exit&quot;</span><span class="s2">);</span>
+
+            <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+            <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+                <span class="s0">case </span><span class="s3">1</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">addProduct</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">2</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">viewProductById</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">3</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">viewAllProducts</span><span class="s2">();</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">4</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">updateStockById</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">5</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">updatePriceById</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">6</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">updateProductName</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">7</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">addToCart</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">8</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">removeFromCart</span><span class="s2">(</span><span class="s1">scanner</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">9</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">displayCart</span><span class="s2">();</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">case </span><span class="s3">10</span><span class="s2">:</span>
+                    <span class="s1">store</span><span class="s2">.</span><span class="s1">exit</span><span class="s2">();</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+                <span class="s0">default</span><span class="s2">:</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Invalid choice&quot;</span><span class="s2">);</span>
+                    <span class="s0">break</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
